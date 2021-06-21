@@ -4,9 +4,11 @@ from db_access import DBAccess
 
 
 def populate_database():
+    # if populated -> no need to fetch again, update just in case
     if DBAccess.getInstance().isPopulated is True:
-        return
-    # otherwise, fetch programs
+        update_database()
+
+    # otherwise, fetch programs and populate
     URL = "https://www.healthwellfoundation.org/disease-funds/"
     page = requests.get(URL)
     soup = BeautifulSoup(page.content, 'html.parser')
@@ -78,6 +80,7 @@ def update_database():
     program_elems = results.find_all('ul', class_='funds')
 
     # 5 programs
+    isUpdated = False
     for program in fetched_programs:
         program_name = program['disease_funds']
         for li_tag in program_elems[0].findAll('li'):
@@ -93,15 +96,22 @@ def update_database():
                 treatments_covered = get_treatments_covered(results)
                 status = get_program_status(results)
                 max_award_level = get_program_award(results)
-                if treatments_covered == program['treatments_covered'] and status == program['status'] and max_award_level == program['max_award_level']:
-                    return False # no need to update
+
+                if treatments_covered == program['treatments_covered'] and status == program[
+                    'status'] and max_award_level == program['max_award_level']:
+                    break  # no need to update
+
+
                 # update DB
                 DBAccess.getInstance().update_program({'disease_funds': program_name},
                                                       {"treatments_covered": treatments_covered,
                                                        "status": status,
                                                        "max_award_level": max_award_level})
-    return True
+                isUpdated = True
+
+    if isUpdated:
+        return True
+    return False
 
 # update_database()
 # populate_database()
-# DBAccess.getInstance().printim()

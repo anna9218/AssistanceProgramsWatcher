@@ -11,10 +11,12 @@ Use the package manager [NPM](https://www.npmjs.com/) to install the required de
 npm install
 ```
 
+Additionaly, please open the 'server' folder with the requirements file specified, a notification bar is displayed on top of any Python or requirements file opened in Editor. Click one of the provided links to satisfy or ignore requirements.
+
 
 ## Usage
 
-To run the application:
+To run the web application:
 ```bash
 npm start
 ```

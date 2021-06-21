@@ -5,7 +5,6 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-
 import Container from 'react-bootstrap/Container';
 
 import * as Service from '../services/communication';
@@ -17,11 +16,12 @@ class Programs extends React.Component {
         this.state = {
             programsData: '',
         }
-
-        this.fetchPrograms(); // to fetch the programs' data
+        this.fetchPrograms();
     }
 
-
+    /**
+     * Function to fetch the programs data from the server.
+     */
     fetchPrograms() {
         const promise = Service.fetchPrograms();
         promise.then((data) => {
@@ -39,12 +39,16 @@ class Programs extends React.Component {
         });
     }
 
+    /**
+     * Function to update the programs display, if needed.
+     */
     updatePrograms() {
         const promise = Service.updatePrograms();
         promise.then((data) => {
             if (data !== undefined) {
                 if (data["data"] != null) {
                     this.setState({programsData: data["data"]});
+                    alert(data["msg"]);
                 }
                 else {
                     alert(data["msg"]);
@@ -73,10 +77,13 @@ class Programs extends React.Component {
     }
 
 
+    /**
+     * Function to render the table programs' data
+     * @returns the table's content
+     */
     renderTableData(){
         var tableIdx = 0;
         return this.state.programsData.map((program, index) => {
-            console.log(program);
             const {disease_funds, treatments_covered, status, max_award_level} = program;
             tableIdx +=1;
             
@@ -93,9 +100,7 @@ class Programs extends React.Component {
     }
 
 
-
     render() {
-
         return (
             <div style={{ marginRight: "1%", marginLeft: "1%", marginBottom: "3%" }}>
                 <div style={{ marginTop: "1%", display: "flex", justifyContent: "center", alignItems: "center" }}>
@@ -124,6 +129,7 @@ class Programs extends React.Component {
                     </Button>
                     </div>
                 </div>
+
                 :
 
                 <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>

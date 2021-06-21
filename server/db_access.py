@@ -8,9 +8,6 @@ class Connect(object):
         url = "mongodb://localhost:27017"
         return MongoClient(url)
 
-        # myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-        # mydb = myclient["mydatabase"]
-
 
 class DBAccess:
     database = None
@@ -41,7 +38,8 @@ class DBAccess:
     def insert_programs(self, data):
         print(data)
         self.database.Programs.insert(data)
-        isPopulated = True
+        if self.database.Programs.count() > 0:
+            self.isPopulated = True
 
     def fetch_programs(self):
         programs_cursor = self.database.Programs.find()
@@ -57,6 +55,7 @@ class DBAccess:
     def update_program(self, program: dict, new_data: dict):
         self.database.Programs.update(program, {'$set': new_data})
 
-    def printim(self):
-        print(self.mongo_client.list_database_names())
-        # self.mongo_client.drop_database("Jobs_DB")
+    def drop_db(self):
+        self.mongo_client.drop_database(self.db_name)
+        if self.database.Programs.count() < 1:
+            self.isPopulated = False

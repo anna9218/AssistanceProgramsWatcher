@@ -1,6 +1,3 @@
-import json
-import os
-import sys
 from flask import Flask, jsonify
 from flask_cors import CORS
 from db_access import DBAccess
@@ -24,7 +21,7 @@ def update_programs():
     response = scraper.update_database()
     if response:
         return fetch_programs()
-    return jsonify(msg="No updates", data=None)
+    return jsonify(msg="No updates were made", data=None)
 
 
 if __name__ == '__main__':
