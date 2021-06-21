@@ -6,7 +6,7 @@ from db_access import DBAccess
 def populate_database():
     # if populated -> no need to fetch again, update just in case
     if DBAccess.getInstance().isPopulated is True:
-        update_database()
+        return update_database()
 
     # otherwise, fetch programs and populate
     URL = "https://www.healthwellfoundation.org/disease-funds/"
