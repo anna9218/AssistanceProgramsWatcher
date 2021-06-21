@@ -2,10 +2,8 @@ import React from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
 import Container from 'react-bootstrap/Container';
+import ReactLoading from "react-loading";
 
 import * as Service from '../services/communication';
 
@@ -132,9 +130,17 @@ class Programs extends React.Component {
 
                 :
 
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <div >
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
                     Please wait, the table is loading... 
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <ReactLoading type="spin" color="#00ccff" />
+                    </div>
                 </div>
+                
+                    
+                
                 }
                 
             </div>
